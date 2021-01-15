@@ -9,6 +9,20 @@ class App extends Component {
       allCards: {},
     }
   };
+  state={
+    lists:this.props.store.lists,
+    allCards: this.props.store.allCards
+  }
+
+  deleteCard = (id) => {
+    for (let i = 0; i < this.state.lists.length; i++) {
+      const list = this.state.lists[i]
+      list.cardIds = list.cardIds.filter(card=> card !== id)
+    }
+    this.setState({
+      lists: this.state.lists
+    })
+  }
 
 render() {
   const { store } = this.props
@@ -23,6 +37,7 @@ render() {
               key={list.id}
               header={list.header}
               cards={list.cardIds.map(id => store.allCards[id])}
+              deleteCard={this.deleteCard}
             />
           ))}
         </div>
